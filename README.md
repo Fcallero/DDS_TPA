@@ -1,3 +1,1 @@
-# DDS TPA Copia
----
-Solo para testear vulnerabilidades con sonar qube
+# DDS_Grupo3_2024_TPA
