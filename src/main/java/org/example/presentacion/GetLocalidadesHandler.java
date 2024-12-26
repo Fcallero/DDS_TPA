@@ -35,34 +35,18 @@ public class GetLocalidadesHandler  implements Handler {
 
 
             PersonaEnSituacionVulnerable rol = (PersonaEnSituacionVulnerable) persona.getRol();
-            List<Uso> usos = rol.getTarjetaHeladera().getUsos();
+            if(rol.getTarjetaHeladera() != null){
+                List<Uso> usos = rol.getTarjetaHeladera().getUsos();
 
-            for (Uso uso : usos) {
+                for (Uso uso : usos) {
 
-                Heladera heladera = uso.getHeladera();
-                Direccion direccion = heladera.getDireccion();
+                    Heladera heladera = uso.getHeladera();
+                    Direccion direccion = heladera.getDireccion();
 
-                String nombreLocalidad = direccion.getLocalidad();
-                //busco si ya se registro la localiad
-                Optional<LocalidadDTO> localidadExistente = respuesta.stream()
-                            .filter(localidadDTO1 -> localidadDTO1.getNombreLocalidad().equals(nombreLocalidad))
-                        .findFirst();
+                    String nombreLocalidad = direccion.getLocalidad();
+                    agregarLocalidad(persona, respuesta, nombreLocalidad);
 
-                if(localidadExistente.isPresent()){
-                    LocalidadDTO localidadDTO1 = localidadExistente.get();
-
-                    //si no exite lo agrego
-                    if(!localidadDTO1.getNombresYApellidosDePersonas().contains(persona.getNombre())){
-                        localidadDTO1.agregarPersona(persona.getNombre());//= nombre + ' ' + apellido
-                    }
-
-                }else {
-                    LocalidadDTO localidadDTO = new LocalidadDTO();
-                    localidadDTO.setNombreLocalidad(nombreLocalidad);
-                    localidadDTO.agregarPersona(persona.getNombre());//= nombre + ' ' + apellido
-                    respuesta.add(localidadDTO);
                 }
-
             }
         }
 
@@ -73,6 +57,28 @@ public class GetLocalidadesHandler  implements Handler {
 
         context.json(respuesta);
 
+    }
+
+    private static void agregarLocalidad(PersonaHumana persona, List<LocalidadDTO> respuesta, String nombreLocalidad) {
+        //busco si ya se registro la localiad
+        Optional<LocalidadDTO> localidadExistente = respuesta.stream()
+                .filter(localidadDTO1 -> localidadDTO1.getNombreLocalidad().equals(nombreLocalidad))
+                .findFirst();
+
+        if(localidadExistente.isPresent()){
+            LocalidadDTO localidadDTO1 = localidadExistente.get();
+
+            //si no exite lo agrego
+            if(!localidadDTO1.getNombresYApellidosDePersonas().contains(persona.getNombre())){
+                localidadDTO1.agregarPersona(persona.getNombre());//= nombre + ' ' + apellido
+            }
+
+        }else {
+            LocalidadDTO localidadDTO = new LocalidadDTO();
+            localidadDTO.setNombreLocalidad(nombreLocalidad);
+            localidadDTO.agregarPersona(persona.getNombre());//= nombre + ' ' + apellido
+            respuesta.add(localidadDTO);
+        }
     }
 
 }

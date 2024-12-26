@@ -38,6 +38,11 @@
                 <li><a href="/usuarios/cerrar-sesion" class="text-danger">Cerrar Sesión</a></li>
             </ul>
         </nav>
+     {{#foto-usuario}}
+        <div class="user-container">
+            <img src="{{foto-usuario}}" alt="Usuario" class="user-foto">
+        </div>
+    {{/foto-usuario}}
     </header>
     <div class="header-container mb-4">
         <h1 class="mb=0">{{heladera.nombre}}</h1>
@@ -45,6 +50,7 @@
     </div>
     <ul class="list-unstyled">
         <li><strong>Capacidad:</strong> {{heladera.capacidadEnViandas}} viandas</li>
+        <li><strong>Viandas almacenadas:</strong> {{heladera.viandasEnHeladera}} viandas</li>
         <li><strong>Direccion:</strong> {{heladera.direccion.nombreCalle}} {{heladera.direccion.altura}}</li>
         <li><strong>Tiempo activa:</strong> {{tiempoActiva}} meses</li>
         <li><strong>Puesta en funcionamiento:</strong> {{heladera.fechaInicioFuncionamiento}}</li>

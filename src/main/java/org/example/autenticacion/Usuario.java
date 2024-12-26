@@ -24,10 +24,21 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUsuario;
 
+    @Getter
+    @Setter
+    private String googleId;
+
     @OneToOne
     private Documento documento;
 
+    @Getter
+    @Setter
     private String nombreDeUsuario;
+
+    @Getter
+    @Setter
+    @Column(columnDefinition = "TEXT")
+    private String foto;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     private Persona colaborador;

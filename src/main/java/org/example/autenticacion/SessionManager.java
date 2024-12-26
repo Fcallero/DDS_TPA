@@ -33,6 +33,9 @@ public class SessionManager {
         return instancia;
     }
 
+    public String iniciarSesionConGoogle(Usuario usuario) {
+        return this.crearJWT(usuario.getIdUsuario());
+    }
 
     // devuelve el token para la cookie
     public String iniciarSesion(String username, String password) throws UserException {
@@ -126,6 +129,7 @@ public class SessionManager {
             atributos.put("HacerseCargoDeUnaHeladera?", "true");
             atributos.put("OfrecerProductos?", "true");
         }
+        atributos.put("foto-usuario", usuario.getFoto());
         return atributos;
     }
 }
